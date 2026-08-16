@@ -10,17 +10,19 @@ import io.github.christechs.clayj.core.RenderCommand;
 import io.github.christechs.clayj.math.BoundingBox;
 import io.github.christechs.clayj.math.Color;
 import io.github.christechs.clayj.math.CornerRadius;
-import io.github.christechs.pithelper.config.PitConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.textures.FilterMode;
+
 public class ClayRenderer {
 
-	public static void draw(LayoutResults results, GuiGraphicsExtractor graphics) {
+	public static void draw(LayoutResults results, GuiGraphicsExtractor graphics, boolean textShadow) {
 		Minecraft mc = Minecraft.getInstance();
 		Font font = mc.font;
 
@@ -36,7 +38,7 @@ public class ClayRenderer {
 				case RECTANGLE -> renderRectangle(graphics, cmd, x1, y1, x2, y2);
 				case BORDER -> renderBorder(graphics, cmd, box);
 				case IMAGE -> renderImage(graphics, cmd, x1, y1, x2, y2);
-				case TEXT -> renderText(graphics, font, cmd, box);
+				case TEXT -> renderText(graphics, font, cmd, box, textShadow);
 				case CUSTOM -> renderCustomItem(graphics, cmd, x1, y1);
 				case SCISSOR_START -> graphics.enableScissor(x1, y1, x2, y2);
 				case SCISSOR_END -> graphics.disableScissor();
@@ -51,23 +53,45 @@ public class ClayRenderer {
 		}
 		CornerRadius cr = cmd.renderData.cornerRadius;
 		if (cr != null && (cr.topLeft > 0 || cr.topRight > 0 || cr.bottomLeft > 0 || cr.bottomRight > 0)) {
-			drawRoundedRect(graphics, cmd.boundingBox.x, cmd.boundingBox.y, cmd.boundingBox.width, cmd.boundingBox.height, cr, bg);
+			drawRoundedRect(graphics, x1, y1, x2, y2, cr, bg);
 			return;
 		}
 		graphics.fill(x1, y1, x2, y2, colorToInt(bg));
 	}
 
-	private static void drawRoundedRect(GuiGraphicsExtractor graphics, float x, float y, float w, float h, CornerRadius cr, Color color) {
+	private static void drawRoundedRect(GuiGraphicsExtractor graphics, int x, int y, int x2, int y2, CornerRadius cr, Color color) {
 		int col = colorToInt(color);
+		int w = Math.max(1, x2 - x);
+		int h = Math.max(1, y2 - y);
+		int scale = Math.max(1, (int) Math.round(Minecraft.getInstance().getWindow().getGuiScale()));
+		if (scale <= 1) {
+			fillRoundedScanlines(graphics, x, y, w, h, cr, col);
+			return;
+		}
+		graphics.pose().pushMatrix();
+		graphics.pose().scale(1f / scale, 1f / scale);
+		fillRoundedScanlines(graphics, x * scale, y * scale, w * scale, h * scale, scaledRadius(cr, scale, w, h), col);
+		graphics.pose().popMatrix();
+	}
+
+	private static CornerRadius scaledRadius(CornerRadius cr, int scale, int w, int h) {
+		float maxR = Math.min(w / 2f, h / 2f) * scale;
+		return new CornerRadius(
+			Math.min(cr.topLeft * scale, maxR),
+			Math.min(cr.topRight * scale, maxR),
+			Math.min(cr.bottomLeft * scale, maxR),
+			Math.min(cr.bottomRight * scale, maxR)
+		);
+	}
+
+	private static void fillRoundedScanlines(GuiGraphicsExtractor graphics, int x, int y, int w, int h, CornerRadius cr, int col) {
 		float maxR = Math.min(w / 2f, h / 2f);
 		float rtl = Math.max(0, Math.min(cr.topLeft, maxR));
 		float rtr = Math.max(0, Math.min(cr.topRight, maxR));
 		float rbl = Math.max(0, Math.min(cr.bottomLeft, maxR));
 		float rbr = Math.max(0, Math.min(cr.bottomRight, maxR));
-		int y0 = Math.round(y);
-		int y1 = Math.round(y + h);
-		for (int py = y0; py < y1; py++) {
-			float fy = (py + 0.5f) - y;
+		for (int row = 0; row < h; row++) {
+			float fy = row + 0.5f;
 			float left = 0f;
 			float right = w;
 			if (fy < rtl) {
@@ -86,10 +110,10 @@ public class ClayRenderer {
 				float dy = fy - (h - rbr);
 				right = Math.min(right, w - (rbr - (float) Math.sqrt(Math.max(0, rbr * rbr - dy * dy))));
 			}
-			int x0 = Math.round(x + left);
-			int x2 = Math.round(x + right);
-			if (x2 > x0) {
-				graphics.fill(x0, py, x2, py + 1, col);
+			int rowX0 = x + Math.round(left);
+			int rowX1 = x + Math.round(right);
+			if (rowX1 > rowX0) {
+				graphics.fill(rowX0, y + row, rowX1, y + row + 1, col);
 			}
 		}
 	}
@@ -120,20 +144,36 @@ public class ClayRenderer {
 		}
 		int w = Math.max(1, x2 - x1);
 		int h = Math.max(1, y2 - y1);
-		graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x1, y1, 0f, 0f, w, h, w, h);
+		AbstractTexture gpuTexture = Minecraft.getInstance().getTextureManager().getTexture(texture);
+		if (gpuTexture == null || gpuTexture.getTextureView() == null) {
+			return;
+		}
+		// 26.2 blit UVs are (u0, u1, v0, v1), not (u0, v0, u1, v1).
+		graphics.blit(
+			gpuTexture.getTextureView(),
+			RenderSystem.getSamplerCache().getClampToEdge(FilterMode.NEAREST),
+			x1, y1, x1 + w, y1 + h,
+			0f, 1f, 0f, 1f
+		);
 	}
 
-	private static void renderText(GuiGraphicsExtractor graphics, Font font, RenderCommand cmd, BoundingBox box) {
+	private static void renderText(GuiGraphicsExtractor graphics, Font font, RenderCommand cmd, BoundingBox box, boolean textShadow) {
 		CharSequence fullText = cmd.renderData.text;
 		int start = cmd.renderData.textStart;
 		int length = cmd.renderData.textLength;
 		String lineText = fullText.subSequence(start, start + length).toString();
 		float textScale = cmd.renderData.fontSize > 0 ? cmd.renderData.fontSize : 1.0f;
 		int colorInt = colorToInt(cmd.renderData.textColor);
+		int x = Math.round(box.x);
+		int y = Math.round(box.y);
+		if (textScale == 1.0f) {
+			graphics.text(font, lineText, x, y, colorInt, textShadow);
+			return;
+		}
 		graphics.pose().pushMatrix();
-		graphics.pose().translate(box.x, box.y);
+		graphics.pose().translate(x, y);
 		graphics.pose().scale(textScale, textScale);
-		graphics.text(font, lineText, 0, 0, colorInt, PitConfig.hud().textDropShadow);
+		graphics.text(font, lineText, 0, 0, colorInt, textShadow);
 		graphics.pose().popMatrix();
 	}
 

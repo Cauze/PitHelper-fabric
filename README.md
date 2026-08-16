@@ -26,7 +26,7 @@ Requires JDK 25 (Minecraft 26.2). Fabric Loader 0.19.3 + Fabric API for 26.2.
 gradlew.bat build
 ```
 
-Copy `build\libs\pithelper-2.0.0-fabric.jar` into `.minecraft\mods`.
+Copy `build\libs\pithelper-2.0.0-fabric-26.2.jar` into `.minecraft\mods`.
 
 ## License
 

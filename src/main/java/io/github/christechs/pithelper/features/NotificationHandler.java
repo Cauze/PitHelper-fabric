@@ -10,7 +10,6 @@ import io.github.christechs.pithelper.data.PitEvent;
 import io.github.christechs.pithelper.utils.ServerState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 
 public class NotificationHandler {
@@ -26,6 +25,7 @@ public class NotificationHandler {
 		}
 
 		NotificationManager.tick();
+		EventFetcher.fetchAsync();
 		EventFetcher.updateState();
 
 		long currentTime = System.currentTimeMillis();
@@ -84,8 +84,8 @@ public class NotificationHandler {
 					mc.player.playSound(SoundEvents.NOTE_BLOCK_PLING.value(), 1.0F, secondsLeft <= 3 ? 1.5F : 1.0F);
 					String colorCode = secondsLeft <= 3 ? "§c§l" : "§e§l";
 					mc.gui.hud.setTimes(2, 16, 2);
-					mc.gui.hud.setTitle(Component.literal(colorCode + secondsLeft));
-					mc.gui.hud.setSubtitle(Component.literal("§7" + e.event + " is starting!"));
+					mc.gui.hud.setTitle(io.github.christechs.pithelper.utils.ChatUtil.legacy(colorCode + secondsLeft));
+					mc.gui.hud.setSubtitle(io.github.christechs.pithelper.utils.ChatUtil.legacy("§7" + e.event + " is starting!"));
 				}
 			}
 		}

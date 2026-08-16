@@ -2,9 +2,7 @@ package io.github.christechs.pithelper.mixin;
 
 import io.github.christechs.pithelper.features.LobbyTracker;
 import net.minecraft.client.gui.components.ChatComponent;
-import net.minecraft.client.multiplayer.chat.GuiMessageTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MessageSignature;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -21,12 +19,8 @@ public class ChatComponentMixin {
 		return LobbyTracker.recolorMessage(message);
 	}
 
-	@ModifyVariable(
-		method = "addPlayerMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/network/chat/MessageSignature;Lnet/minecraft/client/multiplayer/chat/GuiMessageTag;)V",
-		at = @At("HEAD"),
-		argsOnly = true
-	)
-	private Component pithelper$recolorPlayer(Component message, MessageSignature signature, GuiMessageTag tag) {
+	@ModifyVariable(method = "addPlayerMessage", at = @At("HEAD"), argsOnly = true)
+	private Component pithelper$recolorPlayer(Component message) {
 		return LobbyTracker.recolorMessage(message);
 	}
 }

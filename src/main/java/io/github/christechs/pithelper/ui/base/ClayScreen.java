@@ -75,7 +75,7 @@ public abstract class ClayScreen extends Screen {
 		ClayJ.beginLayout();
 		buildLayout(mouseX, mouseY, deltaTime);
 		LayoutResults results = ClayJ.endLayout();
-		ClayRenderer.draw(results, graphics);
+		ClayRenderer.draw(results, graphics, false);
 
 		if (hoveredItemTooltip != null && !hoveredItemTooltip.isEmpty()) {
 			graphics.setTooltipForNextFrame(this.font, hoveredItemTooltip, mouseX, mouseY);

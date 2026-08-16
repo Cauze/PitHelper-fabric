@@ -1,5 +1,6 @@
 package io.github.christechs.pithelper.mixin;
 
+import io.github.christechs.pithelper.render.HighlightRenderState;
 import io.github.christechs.pithelper.utils.PlayerHighlightUtil;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
