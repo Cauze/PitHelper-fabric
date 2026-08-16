@@ -1,0 +1,16 @@
+<Element dir="TOP_TO_BOTTOM" gap="10" width="GROW" height="GROW">
+    <Element dir="LEFT_TO_RIGHT" align="LEFT, CENTER" width="GROW" height="30" gap="10">
+        <Element width="GROW" height="FIT">
+            <Text text="${categoryName}" size="2" color="#FFFFFF"/>
+        </Element>
+        <Input id="LocalSearchBox" placeholder="Search..." bind="categorySearchQuery" width="150"/>
+    </Element>
+
+    <Element id="${wrapperId}" width="GROW" height="${scrollHeight}" dir="LEFT_TO_RIGHT" gap="8">
+        <Element id="${scrollId}" scroll="false,true" width="GROW" height="GROW" dir="TOP_TO_BOTTOM" gap="12"
+                 padding="0,5">
+            <Custom id="ElementList"/>
+        </Element>
+        <Scrollbar target="${scrollId}"/>
+    </Element>
+</Element>

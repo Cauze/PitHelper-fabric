@@ -1,0 +1,34 @@
+<Element dir="TOP_TO_BOTTOM" gap="10" width="GROW" height="GROW">
+    <Element width="GROW" height="30" align="LEFT, CENTER">
+        <Text text="Social &amp; Lobby Management" size="2" color="#FFFFFF"/>
+    </Element>
+
+    <Element id="SocialScrollWrapper" width="GROW" height="${scrollHeight}" dir="LEFT_TO_RIGHT" gap="8">
+        <Element id="SocialScroll" scroll="false,true" width="GROW" height="GROW" dir="TOP_TO_BOTTOM" gap="15"
+                 padding="0,5">
+
+            <Element dir="TOP_TO_BOTTOM" gap="4" width="GROW" height="FIT">
+                <Text text="Manage your Friends and Enemies here, or use /pitfriend and /pitenemy." size="1"
+                      color="#B4B4B4"/>
+                <Text text="If the player is not in your current lobby, they will be fetched via the Mojang API."
+                      size="1" color="#B4B4B4"/>
+            </Element>
+
+            <Element dir="LEFT_TO_RIGHT" gap="10" align="LEFT, CENTER" width="GROW" height="FIT">
+                <Input id="Social_AddInput" placeholder="Player Name..." bind="socialInput" width="150"/>
+                <Button id="Btn_UI_AddFriend" text="Add Friend" onClick="addFriend"/>
+                <Button id="Btn_UI_AddEnemy" text="Add Enemy" onClick="addEnemy"/>
+            </Element>
+
+            <Element dir="LEFT_TO_RIGHT" gap="8" width="GROW" height="FIT">
+                <Custom id="SocialTabs"/>
+            </Element>
+
+            <Element bg="#181A1E" radius="6" width="GROW" height="FIT" padding="10" dir="TOP_TO_BOTTOM" gap="6">
+                <Custom id="SocialList"/>
+            </Element>
+
+        </Element>
+        <Scrollbar target="SocialScroll"/>
+    </Element>
+</Element>

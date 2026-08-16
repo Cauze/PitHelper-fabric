@@ -1,0 +1,13 @@
+<Element dir="TOP_TO_BOTTOM" gap="15" width="GROW" height="GROW">
+    <Text text="Developer Tools" size="2" color="#FFFFFF"/>
+
+    <Element dir="LEFT_TO_RIGHT" gap="15" width="GROW" height="FIT">
+        <Button id="Btn_TestVisNotif" text="Test Visual Notif" onClick="testVis"/>
+        <Button id="Btn_TestChatNotif" text="Test Chat Notif" onClick="testChat"/>
+        <Button id="Btn_TestQuickMaths" text="Test Quick Maths" onClick="testMath"/>
+    </Element>
+
+    <Element dir="LEFT_TO_RIGHT" gap="15" width="GROW" height="FIT">
+        <Button id="Btn_TestDeath" text="Test Death Event" onClick="testDeath"/>
+    </Element>
+</Element>

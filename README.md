@@ -1,0 +1,34 @@
+# PitHelper (Fabric 1.21.11)
+
+Fabric 1.21.11 port of [ChrisTechs/PitHelper](https://github.com/ChrisTechs/PitHelper). Original mod is Forge 1.8.9; this tree keeps the same event HUD, config menu, commands, and BrookeAFK feed.
+
+Version branches (not Stonecutter): `1.8.9` (Forge original), `1.21.11` (this tree), `26.2` (Fabric 26.2).
+
+## What works in this port
+
+- Event HUD (next events + active event) from BrookeAFK
+- `/pithelper` config / live events / API / social / dev tools
+- `/pitfriend`, `/pitenemy`, `/apiexplorer`, `/viewinv`
+- Chat and visual event notifications, plus on-screen countdown titles
+- Quick Maths solver (clipboard / open chat — does not auto-send)
+- Auto-spawn keybind and death movement block
+- Lobby prestige scanner, friend/enemy join alerts, and chat name colors
+- Friend/enemy/iron/chain player tints
+- PitHelper.org API explorer and profile/inventory viewer
+
+Hypixel location uses `/locraw` (hidden from chat) plus scoreboard titles. The original Forge build used Hypixel Mod API packets instead.
+
+## Build
+
+Requires JDK 21 (`C:\Program Files\Java\jdk-21` on this machine). Default `java` on PATH may be 25 — pin JAVA_HOME.
+
+```bat
+set JAVA_HOME=C:\Program Files\Java\jdk-21
+gradlew.bat build
+```
+
+Install Fabric Loader 1.21.11 + Fabric API, then copy `build\libs\pithelper-2.0.0-fabric.jar` into `.minecraft\mods`.
+
+## License
+
+GNU Affero General Public License v3.0. Copyright (c) 2026 Christian Steenkamp. This Fabric port is a derivative work.

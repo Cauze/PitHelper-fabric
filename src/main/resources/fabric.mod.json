@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "pithelper",
+	"version": "${version}",
+	"name": "PitHelper",
+	"description": "Fabric port of ChrisTechs/PitHelper for Hypixel The Pit.",
+	"authors": [
+		"ChrisTechs",
+		"Peak"
+	],
+	"license": "AGPL-3.0-or-later",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"io.github.christechs.pithelper.PitHelper"
+		]
+	},
+	"mixins": [
+		"pithelper.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

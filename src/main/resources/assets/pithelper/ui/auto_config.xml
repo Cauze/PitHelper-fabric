@@ -1,0 +1,19 @@
+<Element bg="#181A1E" radius="10" width="GROW" height="GROW" dir="LEFT_TO_RIGHT">
+    <Element id="Sidebar" bg="#1E2026" radius="10,0,10,0" width="160" height="GROW" dir="TOP_TO_BOTTOM" padding="15"
+             gap="10">
+        <Text text="${menuTitle}" size="2" color="#FFC832"/>
+
+        <Input id="GlobalSearchBox" placeholder="Global Search..." bind="globalSearchQuery" width="-1"/>
+
+        <Element id="SidebarTabsWrapper" width="GROW" height="GROW" dir="LEFT_TO_RIGHT" gap="8">
+            <Element id="SidebarTabs" scroll="false,true" width="GROW" height="GROW" dir="TOP_TO_BOTTOM" gap="8">
+                <Custom id="TabList"/>
+            </Element>
+            <Scrollbar target="SidebarTabs"/>
+        </Element>
+    </Element>
+
+    <Element id="MainContent" width="GROW" height="GROW" dir="TOP_TO_BOTTOM" padding="20" gap="15">
+        <Custom id="ActiveContent"/>
+    </Element>
+</Element>

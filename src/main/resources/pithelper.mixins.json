@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "io.github.christechs.pithelper.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"EntityRenderStateMixin",
+		"LivingEntityRendererMixin",
+		"EquipmentLayerRendererMixin",
+		"KeyMappingAccessor",
+		"ChatComponentMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
