@@ -208,6 +208,8 @@ public class PitConfig {
         public boolean countdownEnabled = false;
         @ConfigProperty(name = "Drop Shadow", description = "Draw shadow behind HUD text.")
         public boolean textDropShadow = true;
+        @ConfigProperty(name = "Event Data Credit", description = "Show 'Credit to BrookeAFK for event data' on the HUD.")
+        public boolean showEventDataCredit = false;
         @ConfigRange(min = 1, max = 10)
         @ConfigProperty(name = "HUD Event Count", description = "Max events shown on HUD.")
         public int overlayEventCount = 4;

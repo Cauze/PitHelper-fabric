@@ -28,7 +28,7 @@ public class IconCache {
 			cache.put("Robbery", item("gold_ingot"));
 			cache.put("Care Package", item("chest_minecart"));
 			cache.put("Raffle", item("name_tag"));
-			cache.put("Squads", item("red_bed"));
+			cache.put("Squads", Identifier.fromNamespaceAndPath("pithelper", "textures/bed.png"));
 			cache.put("Spire", item("ender_pearl"));
 			cache.put("Giant Cake", item("cake"));
 			cache.put("Pizza", Identifier.fromNamespaceAndPath("pithelper", "textures/pizza.png"));

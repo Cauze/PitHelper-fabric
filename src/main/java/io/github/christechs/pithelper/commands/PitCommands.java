@@ -36,7 +36,7 @@ public final class PitCommands {
 					McCompat.chat("§e/pitfriend <player> §7- Adds/removes a player as a friend.");
 					McCompat.chat("§e/pitenemy <player> §7- Adds/removes a player as an enemy.");
 					McCompat.chat("§e/pithelper lobbystats §7- Prints current lobby prestige stats.");
-					McCompat.chat("§e/apiexplorer §7- Opens the PitHelper API explorer.");
+					McCompat.chat("§e/apiexplorer §7- Opens the API Explorer & Lobby Search.");
 					McCompat.chat("§e/viewinv <player> §7- Opens a player's Pit profile/inventory.");
 					return 1;
 				}))
@@ -85,7 +85,7 @@ public final class PitCommands {
 					return 1;
 				})));
 			dispatcher.register(literal("apiexplorer").executes(ctx -> {
-				NotificationHandler.pendingScreen = new io.github.christechs.pithelper.ui.screen.ApiExplorerScreen(null);
+				McCompat.chat("§cFeature not supported.");
 				return 1;
 			}));
 		});

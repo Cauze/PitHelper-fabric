@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "pithelper",
 	"version": "${version}",
-	"name": "PitHelper",
+	"name": "PitHelper (${minecraft_version})",
 	"description": "Fabric port of ChrisTechs/PitHelper for Hypixel The Pit.",
 	"authors": [
 		"ChrisTechs",

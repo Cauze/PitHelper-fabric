@@ -73,8 +73,8 @@ public class PitHelper implements ClientModInitializer {
 
 		PitCommands.register();
 
-		HudElementRegistry.attachElementBefore(
-			VanillaHudElements.CHAT,
+		HudElementRegistry.attachElementAfter(
+			VanillaHudElements.SCOREBOARD,
 			Identifier.fromNamespaceAndPath(MOD_ID, "overlay"),
 			EventOverlay::renderHud
 		);

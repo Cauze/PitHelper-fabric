@@ -136,14 +136,20 @@ public class EventOverlay {
 						count++;
 					}
 				}
-				el(decl().layout(layout().sizing(GROW, 0, FIXED, 2)), () -> {});
-				text("Credit to BrookeAFK for event data.", txt().size(1).color(120, 120, 120, 255));
+				if (PitConfig.hud().showEventDataCredit) {
+					el(decl().layout(layout().sizing(GROW, 0, FIXED, 2)), () -> {});
+					text("Credit to BrookeAFK for event data.", txt().size(1).color(120, 120, 120, 255));
+				}
 			});
 
 		LayoutResults results = ClayJ.endLayout();
+		if (scale == 1.0f) {
+			ClayRenderer.draw(results, graphics, PitConfig.hud().textDropShadow);
+			return;
+		}
 		graphics.pose().pushMatrix();
 		graphics.pose().scale(scale, scale);
-		ClayRenderer.draw(results, graphics);
+		ClayRenderer.draw(results, graphics, PitConfig.hud().textDropShadow);
 		graphics.pose().popMatrix();
 	}
 
@@ -174,7 +180,7 @@ public class EventOverlay {
 			});
 			index++;
 		}
-		ClayRenderer.draw(ClayJ.endLayout(), graphics);
+		ClayRenderer.draw(ClayJ.endLayout(), graphics, PitConfig.hud().textDropShadow);
 	}
 
 	private static void drawUnifiedRow(PitEvent e, long timeDiff, boolean isActive) {

@@ -27,7 +27,7 @@ set JAVA_HOME=C:\Program Files\Java\jdk-21
 gradlew.bat build
 ```
 
-Install Fabric Loader 1.21.11 + Fabric API, then copy `build\libs\pithelper-2.0.0-fabric.jar` into `.minecraft\mods`.
+Install Fabric Loader 1.21.11 + Fabric API, then copy `build\libs\pithelper-2.0.0-fabric-1.21.11.jar` into `.minecraft\mods`.
 
 ## License
 

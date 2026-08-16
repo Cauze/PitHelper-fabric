@@ -9,5 +9,6 @@
 
     <Element dir="LEFT_TO_RIGHT" gap="15" width="GROW" height="FIT">
         <Button id="Btn_TestDeath" text="Test Death Event" onClick="testDeath"/>
+        <Button id="Btn_TestTitle" text="Test Countdown Title" onClick="testTitle"/>
     </Element>
 </Element>

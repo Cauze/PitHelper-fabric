@@ -57,7 +57,8 @@ public class PitHelperMenu extends AutoConfigScreen {
         super("PitHelper");
         loadConfigCategories();
         addTab(new LiveEventsTab(this));
-        addTab(new ApiTab(this));
+        // Hidden in Forge 1.8.9; /apiexplorer is stubbed there too.
+        // addTab(new ApiTab(this));
         addTab(new SocialTab(this));
         addTab(new DevToolsTab());
     }
@@ -181,6 +182,7 @@ public class PitHelperMenu extends AutoConfigScreen {
 
         @Override
         public void draw() {
+            EventFetcher.fetchAsync();
             if (xmlNode != null) xmlNode.render(ctx);
         }
 
@@ -306,6 +308,12 @@ public class PitHelperMenu extends AutoConfigScreen {
             ctx.bindAction("testChat", () -> ChatUtil.simulateChat("§6§l[PitHelper] §eTEST EVENT §7starts in §a0m 0s§7!"));
             ctx.bindAction("testMath", () -> ChatUtil.simulateChat("§d§lQUICK MATHS! §eSolve: (2+8)x5"));
             ctx.bindAction("testDeath", () -> ChatUtil.simulateChat("§c§lDEATH! §7by §c[§4§l81§c] §6TEST_PLAYER §e§lVIEW RECAP"));
+            ctx.bindAction("testTitle", () -> {
+                Minecraft mc = Minecraft.getInstance();
+                mc.gui.setTimes(10, 40, 10);
+                mc.gui.setTitle(ChatUtil.legacy("§e§l5"));
+                mc.gui.setSubtitle(ChatUtil.legacy("§7Quick Maths is starting!"));
+            });
         }
 
         @Override

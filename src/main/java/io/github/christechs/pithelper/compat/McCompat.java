@@ -7,7 +7,6 @@ import org.lwjgl.glfw.GLFW;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.network.chat.Component;
 
 public final class McCompat {
 	private McCompat() {}
@@ -30,7 +29,7 @@ public final class McCompat {
 
 	public static void chat(String text) {
 		if (mc().player != null) {
-			mc().player.displayClientMessage(Component.literal(text), false);
+			mc().player.displayClientMessage(io.github.christechs.pithelper.utils.ChatUtil.legacy(text), false);
 		}
 	}
 
