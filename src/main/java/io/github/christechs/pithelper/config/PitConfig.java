@@ -96,7 +96,7 @@ public class PitConfig {
 
         if (hudCat != null) {
             hudCat.elements.add(0, ConfigBuilder.button("editHudBtn", "Edit HUD Layout", "Click to drag and resize the HUD.", "Edit HUD", () ->
-                    Minecraft.getInstance().setScreen(new EditOverlayScreen())));
+                    Minecraft.getInstance().gui.setScreen(new EditOverlayScreen())));
         }
 
         if (gamemodesCat != null) {

@@ -30,8 +30,12 @@ public final class McCompat {
 
 	public static void chat(String text) {
 		if (mc().player != null) {
-			mc().player.displayClientMessage(Component.literal(text), false);
+			mc().player.sendSystemMessage(Component.literal(text));
 		}
+	}
+
+	public static net.minecraft.client.gui.screens.Screen screen() {
+		return mc().gui.screen();
 	}
 
 	public static boolean leftMouseDown() {

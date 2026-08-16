@@ -133,7 +133,7 @@ public class ApiExplorerScreen extends ClayScreen {
 		});
 
 		if (this.screenToOpen != null) {
-			this.mc.setScreen(this.screenToOpen);
+			this.mc.gui.setScreen(this.screenToOpen);
 			this.screenToOpen = null;
 		}
 	}

@@ -21,7 +21,7 @@ public class NotificationHandler {
 
 	public void onTick(Minecraft mc) {
 		if (pendingScreen != null) {
-			mc.setScreen(pendingScreen);
+			mc.gui.setScreen(pendingScreen);
 			pendingScreen = null;
 		}
 
@@ -83,9 +83,9 @@ public class NotificationHandler {
 					countdownTicks.add(tickKey);
 					mc.player.playSound(SoundEvents.NOTE_BLOCK_PLING.value(), 1.0F, secondsLeft <= 3 ? 1.5F : 1.0F);
 					String colorCode = secondsLeft <= 3 ? "§c§l" : "§e§l";
-					mc.gui.setTimes(2, 16, 2);
-					mc.gui.setTitle(Component.literal(colorCode + secondsLeft));
-					mc.gui.setSubtitle(Component.literal("§7" + e.event + " is starting!"));
+					mc.gui.hud.setTimes(2, 16, 2);
+					mc.gui.hud.setTitle(Component.literal(colorCode + secondsLeft));
+					mc.gui.hud.setSubtitle(Component.literal("§7" + e.event + " is starting!"));
 				}
 			}
 		}

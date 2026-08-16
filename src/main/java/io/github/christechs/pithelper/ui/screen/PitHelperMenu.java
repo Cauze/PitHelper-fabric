@@ -65,7 +65,7 @@ public class PitHelperMenu extends AutoConfigScreen {
     @Override
     protected void onPostBuildLayout() {
         if (this.screenToOpen != null) {
-            this.mc.setScreen(this.screenToOpen);
+			this.mc.gui.setScreen(this.screenToOpen);
             this.screenToOpen = null;
         }
     }

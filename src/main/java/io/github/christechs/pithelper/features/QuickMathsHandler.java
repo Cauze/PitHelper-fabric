@@ -46,7 +46,7 @@ public class QuickMathsHandler {
 		}
 		McCompat.chat(alert);
 		if (PitConfig.general().quickMathsAutoOpenChat) {
-			mc.execute(() -> mc.setScreen(new ChatScreen(result, false)));
+			mc.execute(() -> mc.gui.setScreen(new ChatScreen(result, false)));
 		}
 	}
 }

@@ -25,7 +25,7 @@ import io.github.christechs.pithelper.ui.utils.IconCache;
 import io.github.christechs.pithelper.utils.ServerState;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import static io.github.christechs.clayj.ClayJ.decl;
 import static io.github.christechs.clayj.ClayJ.el;
@@ -43,12 +43,12 @@ import static io.github.christechs.clayj.enums.SizingType.GROW;
 public class EventOverlay {
 
 	public static boolean isClayMenuOpen(Minecraft mc) {
-		return mc.screen instanceof ClayScreen;
+		return mc.gui.screen() instanceof ClayScreen;
 	}
 
-	public static void renderHud(GuiGraphics graphics, DeltaTracker tickCounter) {
+	public static void renderHud(GuiGraphicsExtractor graphics, DeltaTracker tickCounter) {
 		Minecraft mc = Minecraft.getInstance();
-		if (mc.options.hideGui) {
+		if (mc.gui.hud.isHidden()) {
 			return;
 		}
 		if (PitConfig.general().onlyOnHypixel && !ServerState.onHypixel) {
@@ -60,7 +60,7 @@ public class EventOverlay {
 				return;
 			}
 		}
-		if (isClayMenuOpen(mc) || mc.screen instanceof EditOverlayScreen) {
+		if (isClayMenuOpen(mc) || mc.gui.screen() instanceof EditOverlayScreen) {
 			return;
 		}
 		if (!PitConfig.hud().overlayEnabled && NotificationManager.activeNotifications.isEmpty()) {
@@ -73,7 +73,7 @@ public class EventOverlay {
 		drawOverlayStatic(graphics, mc);
 	}
 
-	public static void drawOverlayStatic(GuiGraphics graphics, Minecraft mc) {
+	public static void drawOverlayStatic(GuiGraphicsExtractor graphics, Minecraft mc) {
 		int scaledWidth = mc.getWindow().getGuiScaledWidth();
 		int scaledHeight = mc.getWindow().getGuiScaledHeight();
 
@@ -86,7 +86,7 @@ public class EventOverlay {
 			});
 		}
 
-		boolean isEditScreen = mc.screen instanceof EditOverlayScreen;
+		boolean isEditScreen = mc.gui.screen() instanceof EditOverlayScreen;
 		if ((PitConfig.hud().overlayEnabled || isEditScreen) && !isClayMenuOpen(mc)) {
 			drawHUD(graphics, mc, scaledWidth, scaledHeight);
 		}
@@ -95,7 +95,7 @@ public class EventOverlay {
 		}
 	}
 
-	private static void drawHUD(GuiGraphics graphics, Minecraft mc, int scaledWidth, int scaledHeight) {
+	private static void drawHUD(GuiGraphicsExtractor graphics, Minecraft mc, int scaledWidth, int scaledHeight) {
 		float scale = PitConfig.hud().overlayScale;
 		ClayJ.setLayoutDimensions(scaledWidth / scale, scaledHeight / scale);
 		ClayJ.setPointerState(new Vector2(-1, -1), false);
@@ -147,7 +147,7 @@ public class EventOverlay {
 		graphics.pose().popMatrix();
 	}
 
-	private static void drawNotification(GuiGraphics graphics, Minecraft mc, int scaledWidth, int scaledHeight) {
+	private static void drawNotification(GuiGraphicsExtractor graphics, Minecraft mc, int scaledWidth, int scaledHeight) {
 		ClayJ.setLayoutDimensions(scaledWidth, scaledHeight);
 		ClayJ.setPointerState(new Vector2(-1, -1), false);
 		ClayJ.beginLayout();

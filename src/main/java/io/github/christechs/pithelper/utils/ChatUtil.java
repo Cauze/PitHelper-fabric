@@ -1,5 +1,6 @@
 package io.github.christechs.pithelper.utils;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import io.github.christechs.pithelper.compat.McCompat;
@@ -33,7 +34,7 @@ public class ChatUtil {
 				if (formatting == null) {
 					continue;
 				}
-				if (formatting.isFormat()) {
+				if (isFormat(formatting)) {
 					style = style.applyFormat(formatting);
 				} else {
 					style = Style.EMPTY.withItalic(false).applyFormat(formatting);
@@ -67,9 +68,14 @@ public class ChatUtil {
 	private static String styleToLegacy(Style style) {
 		StringBuilder sb = new StringBuilder("§r");
 		if (style.getColor() != null) {
-			ChatFormatting named = ChatFormatting.getByName(style.getColor().serialize());
+			ChatFormatting named = namedColor(style.getColor().serialize());
 			if (named != null) {
-				sb.append('§').append(named.getChar());
+				String code = named.toString();
+				if (code.startsWith("§")) {
+					sb.append(code);
+				} else {
+					sb.append('§').append(code.charAt(code.length() - 1));
+				}
 			}
 		}
 		if (style.isObfuscated()) sb.append("§k");
@@ -78,5 +84,24 @@ public class ChatUtil {
 		if (style.isUnderlined()) sb.append("§n");
 		if (style.isItalic()) sb.append("§o");
 		return sb.toString();
+	}
+
+	private static boolean isFormat(ChatFormatting formatting) {
+		return formatting == ChatFormatting.OBFUSCATED
+			|| formatting == ChatFormatting.BOLD
+			|| formatting == ChatFormatting.STRIKETHROUGH
+			|| formatting == ChatFormatting.UNDERLINE
+			|| formatting == ChatFormatting.ITALIC;
+	}
+
+	private static ChatFormatting namedColor(String name) {
+		if (name == null || name.isEmpty()) {
+			return null;
+		}
+		try {
+			return ChatFormatting.valueOf(name.toUpperCase(Locale.ROOT));
+		} catch (IllegalArgumentException ignored) {
+			return null;
+		}
 	}
 }

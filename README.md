@@ -1,8 +1,8 @@
-# PitHelper (Fabric 1.21.11)
+# PitHelper (Fabric 26.2)
 
-Fabric 1.21.11 port of [ChrisTechs/PitHelper](https://github.com/ChrisTechs/PitHelper). Original mod is Forge 1.8.9; this tree keeps the same event HUD, config menu, commands, and BrookeAFK feed.
+Fabric 26.2 port of [ChrisTechs/PitHelper](https://github.com/ChrisTechs/PitHelper). Original mod is Forge 1.8.9; this tree keeps the same event HUD, config menu, commands, and BrookeAFK feed.
 
-Version branches (not Stonecutter): `1.8.9` (Forge original), `1.21.11` (this tree), `26.2` (Fabric 26.2).
+Version branches (not Stonecutter): `1.8.9` (Forge original), `1.21.11` (Fabric 1.21.11), `26.2` (this tree).
 
 ## What works in this port
 
@@ -20,14 +20,13 @@ Hypixel location uses `/locraw` (hidden from chat) plus scoreboard titles. The o
 
 ## Build
 
-Requires JDK 21 (`C:\Program Files\Java\jdk-21` on this machine). Default `java` on PATH may be 25 — pin JAVA_HOME.
+Requires JDK 25 (Minecraft 26.2). Fabric Loader 0.19.3 + Fabric API for 26.2.
 
 ```bat
-set JAVA_HOME=C:\Program Files\Java\jdk-21
 gradlew.bat build
 ```
 
-Install Fabric Loader 1.21.11 + Fabric API, then copy `build\libs\pithelper-2.0.0-fabric.jar` into `.minecraft\mods`.
+Copy `build\libs\pithelper-2.0.0-fabric.jar` into `.minecraft\mods`.
 
 ## License
 

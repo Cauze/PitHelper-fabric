@@ -13,14 +13,14 @@ import io.github.christechs.clayj.math.CornerRadius;
 import io.github.christechs.pithelper.config.PitConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 public class ClayRenderer {
 
-	public static void draw(LayoutResults results, GuiGraphics graphics) {
+	public static void draw(LayoutResults results, GuiGraphicsExtractor graphics) {
 		Minecraft mc = Minecraft.getInstance();
 		Font font = mc.font;
 
@@ -44,7 +44,7 @@ public class ClayRenderer {
 		}
 	}
 
-	private static void renderRectangle(GuiGraphics graphics, RenderCommand cmd, int x1, int y1, int x2, int y2) {
+	private static void renderRectangle(GuiGraphicsExtractor graphics, RenderCommand cmd, int x1, int y1, int x2, int y2) {
 		Color bg = cmd.renderData.backgroundColor;
 		if (bg == null || bg.a <= 0) {
 			return;
@@ -57,7 +57,7 @@ public class ClayRenderer {
 		graphics.fill(x1, y1, x2, y2, colorToInt(bg));
 	}
 
-	private static void drawRoundedRect(GuiGraphics graphics, float x, float y, float w, float h, CornerRadius cr, Color color) {
+	private static void drawRoundedRect(GuiGraphicsExtractor graphics, float x, float y, float w, float h, CornerRadius cr, Color color) {
 		int col = colorToInt(color);
 		float maxR = Math.min(w / 2f, h / 2f);
 		float rtl = Math.max(0, Math.min(cr.topLeft, maxR));
@@ -94,7 +94,7 @@ public class ClayRenderer {
 		}
 	}
 
-	private static void renderBorder(GuiGraphics graphics, RenderCommand cmd, BoundingBox box) {
+	private static void renderBorder(GuiGraphicsExtractor graphics, RenderCommand cmd, BoundingBox box) {
 		Color borderColor = cmd.renderData.borderColor;
 		if (borderColor == null || borderColor.a <= 0) {
 			return;
@@ -114,7 +114,7 @@ public class ClayRenderer {
 		if (right > 0) graphics.fill(x + w - right, y, x + w, y + h, color);
 	}
 
-	private static void renderImage(GuiGraphics graphics, RenderCommand cmd, int x1, int y1, int x2, int y2) {
+	private static void renderImage(GuiGraphicsExtractor graphics, RenderCommand cmd, int x1, int y1, int x2, int y2) {
 		if (!(cmd.renderData.imageData instanceof Identifier texture)) {
 			return;
 		}
@@ -123,7 +123,7 @@ public class ClayRenderer {
 		graphics.blit(RenderPipelines.GUI_TEXTURED, texture, x1, y1, 0f, 0f, w, h, w, h);
 	}
 
-	private static void renderText(GuiGraphics graphics, Font font, RenderCommand cmd, BoundingBox box) {
+	private static void renderText(GuiGraphicsExtractor graphics, Font font, RenderCommand cmd, BoundingBox box) {
 		CharSequence fullText = cmd.renderData.text;
 		int start = cmd.renderData.textStart;
 		int length = cmd.renderData.textLength;
@@ -133,13 +133,13 @@ public class ClayRenderer {
 		graphics.pose().pushMatrix();
 		graphics.pose().translate(box.x, box.y);
 		graphics.pose().scale(textScale, textScale);
-		graphics.drawString(font, lineText, 0, 0, colorInt, PitConfig.hud().textDropShadow);
+		graphics.text(font, lineText, 0, 0, colorInt, PitConfig.hud().textDropShadow);
 		graphics.pose().popMatrix();
 	}
 
-	private static void renderCustomItem(GuiGraphics graphics, RenderCommand cmd, int x, int y) {
+	private static void renderCustomItem(GuiGraphicsExtractor graphics, RenderCommand cmd, int x, int y) {
 		if (cmd.renderData.customData instanceof ItemStack item) {
-			graphics.renderItem(item, x, y);
+			graphics.item(item, x, y);
 		}
 	}
 

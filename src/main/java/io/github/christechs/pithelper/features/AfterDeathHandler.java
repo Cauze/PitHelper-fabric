@@ -16,7 +16,7 @@ public class AfterDeathHandler {
 	private boolean isBlocking = false;
 
 	public void onTick(Minecraft mc) {
-		if (mc.player == null || mc.screen != null) {
+		if (mc.player == null || mc.gui.screen() != null) {
 			return;
 		}
 		if (!PitConfig.general().blockMovementAfterDeath) {

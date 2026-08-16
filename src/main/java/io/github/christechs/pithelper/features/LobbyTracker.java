@@ -18,6 +18,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.TeamColor;
 
 public class LobbyTracker {
 	private static final Pattern STRIP_COLOR = Pattern.compile("(?i)§[0-9A-FK-OR]");
@@ -163,7 +164,7 @@ public class LobbyTracker {
 		if (team == null) {
 			return 0;
 		}
-		return switch (team.getColor()) {
+		return switch (team.getColor().orElse(null)) {
 			case GRAY -> 0;
 			case BLUE -> 2;
 			case YELLOW -> 7;
@@ -177,7 +178,7 @@ public class LobbyTracker {
 			case BLACK -> 46;
 			case DARK_RED -> 48;
 			case DARK_GRAY -> 50;
-			default -> 0;
+			case null, default -> 0;
 		};
 	}
 

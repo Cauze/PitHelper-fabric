@@ -13,7 +13,7 @@ import io.github.christechs.pithelper.compat.McCompat;
 import io.github.christechs.pithelper.ui.ClayRenderer;
 import io.github.christechs.pithelper.ui.components.ClayComponents;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.CharacterEvent;
 import net.minecraft.client.input.KeyEvent;
@@ -53,8 +53,8 @@ public abstract class ClayScreen extends Screen {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-		this.renderBackground(graphics, mouseX, mouseY, partialTick);
+	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+		super.extractRenderState(graphics, mouseX, mouseY, partialTick);
 
 		long currentTime = System.currentTimeMillis();
 		float deltaTime = (currentTime - lastFrameTime) / 1000f;

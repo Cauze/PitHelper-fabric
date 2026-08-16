@@ -4,7 +4,7 @@ import io.github.christechs.config.ConfigManager;
 import io.github.christechs.pithelper.config.PitConfig;
 import io.github.christechs.pithelper.data.EventFetcher;
 import io.github.christechs.pithelper.ui.hud.EventOverlay;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
@@ -37,10 +37,10 @@ public class EditOverlayScreen extends Screen {
 	}
 
 	@Override
-	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-		this.renderBackground(graphics, mouseX, mouseY, partialTick);
-		graphics.drawCenteredString(this.font, "Click & Drag to move. Drag right edge to resize.", this.width / 2, 20, 0xFFFFFF);
-		graphics.drawCenteredString(this.font, "Scroll Mouse Wheel to scale HUD. Press ESC to save.", this.width / 2, 35, 0xAAAAAA);
+	public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
+		super.extractRenderState(graphics, mouseX, mouseY, partialTick);
+		graphics.centeredText(this.font, "Click & Drag to move. Drag right edge to resize.", this.width / 2, 20, 0xFFFFFF);
+		graphics.centeredText(this.font, "Scroll Mouse Wheel to scale HUD. Press ESC to save.", this.width / 2, 35, 0xAAAAAA);
 		if (currentMode == DragMode.MOVING) {
 			float newX = startDragX + ((mouseX - startMouseX) / (float) this.width);
 			float newY = startDragY + ((mouseY - startMouseY) / (float) this.height);
@@ -93,7 +93,7 @@ public class EditOverlayScreen extends Screen {
 	@Override
 	public void onClose() {
 		ConfigManager.save();
-		this.minecraft.setScreen(new PitHelperMenu());
+		this.minecraft.gui.setScreen(new PitHelperMenu());
 	}
 
 	@Override
