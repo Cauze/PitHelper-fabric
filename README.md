@@ -1,8 +1,8 @@
 # PitHelper (Fabric 1.21.11)
 
-Fabric 1.21.11 port of [ChrisTechs/PitHelper](https://github.com/ChrisTechs/PitHelper). Original mod is Forge 1.8.9; this tree keeps the same event HUD, config menu, commands, and BrookeAFK feed.
+Fabric 1.21.11 port of [ChrisTechs/PitHelper](https://github.com/ChrisTechs/PitHelper). The original is **Forge 1.8.9** (`v2` on that repo); this tree is Fabric-only and keeps the same event HUD, config menu, commands, and BrookeAFK feed.
 
-Version branches (not Stonecutter): `1.8.9` (Forge original), `1.21.11` (this tree), `26.2` (Fabric 26.2).
+Fabric version branches (not Stonecutter): `1.21.11` (this tree) and `26.2`.
 
 ## What works in this port
 
