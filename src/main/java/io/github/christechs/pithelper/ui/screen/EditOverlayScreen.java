@@ -38,7 +38,6 @@ public class EditOverlayScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-		this.renderBackground(graphics, mouseX, mouseY, partialTick);
 		graphics.drawCenteredString(this.font, "Click & Drag to move. Drag right edge to resize.", this.width / 2, 20, 0xFFFFFF);
 		graphics.drawCenteredString(this.font, "Scroll Mouse Wheel to scale HUD. Press ESC to save.", this.width / 2, 35, 0xAAAAAA);
 		if (currentMode == DragMode.MOVING) {

@@ -54,8 +54,6 @@ public abstract class ClayScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-		this.renderBackground(graphics, mouseX, mouseY, partialTick);
-
 		long currentTime = System.currentTimeMillis();
 		float deltaTime = (currentTime - lastFrameTime) / 1000f;
 		lastFrameTime = currentTime;

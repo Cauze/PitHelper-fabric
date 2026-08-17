@@ -1,10 +1,8 @@
 package io.github.christechs.pithelper.mixin;
 
 import io.github.christechs.pithelper.features.LobbyTracker;
-import net.minecraft.client.GuiMessageTag;
 import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MessageSignature;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -16,7 +14,7 @@ public class ChatComponentMixin {
 		at = @At("HEAD"),
 		argsOnly = true
 	)
-	private Component pithelper$recolor(Component message, MessageSignature signature, GuiMessageTag tag) {
+	private Component pithelper$recolor(Component message) {
 		return LobbyTracker.recolorMessage(message);
 	}
 }

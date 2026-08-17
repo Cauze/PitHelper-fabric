@@ -1,5 +1,6 @@
 package io.github.christechs.pithelper.mixin;
 
+import io.github.christechs.pithelper.render.HighlightRenderState;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
