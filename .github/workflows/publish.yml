@@ -1,0 +1,59 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag (leave empty to use v<mod_version>-<minecraft_version>)
+        required: false
+        type: string
+      prerelease:
+        description: Mark as pre-release
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        run: |
+          sed -i 's/\r$//' gradlew
+          chmod +x gradlew
+          ./gradlew build --stacktrace --no-daemon
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_TAG: ${{ inputs.tag }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          set -euo pipefail
+          MOD=$(grep '^mod_version=' gradle.properties | cut -d= -f2- | tr -d '\r')
+          MC=$(grep '^minecraft_version=' gradle.properties | cut -d= -f2- | tr -d '\r')
+          VERSION="${MOD}-${MC}"
+          TAG="${INPUT_TAG:-v${VERSION}}"
+          JAR="build/libs/pithelper-${VERSION}.jar"
+          if [ ! -f "$JAR" ]; then
+            echo "Expected jar not found: $JAR"
+            ls -la build/libs || true
+            exit 1
+          fi
+          EXTRA=()
+          if [ "$PRERELEASE" = "true" ]; then
+            EXTRA+=(--prerelease)
+          fi
+          gh release create "$TAG" "$JAR" --title "PitHelper ${VERSION}" --generate-notes "${EXTRA[@]}"
